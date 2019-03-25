@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, Grid, Icon } from '@material-ui/core';
 
 export default class InputMulti extends Component {
 
@@ -13,7 +13,18 @@ export default class InputMulti extends Component {
 
     render () {
         return (
-            <div>
+            
+            <Grid container justify="center"
+                alignItems="center">
+                <Grid item xs={3}>
+                    <Grid container justify="center"
+                        alignItems="center">
+                        <Icon color="action">
+                            description
+                        </Icon>
+                        </Grid>
+                    </Grid>
+                <Grid item xs={9}>
                 <TextField
                     id="standard-multiline-static"
                     label="Description"
@@ -21,8 +32,10 @@ export default class InputMulti extends Component {
                     value={this.state.description}  
                     onChange={this.handleChange('description')}    
                     margin="normal"
-                />
-            </div>
+                    />
+                </Grid>
+            </Grid>
+            
         )
     }
 }   

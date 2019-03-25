@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormControl,InputLabel, Select, MenuItem } from '@material-ui/core';
+import { FormControl,InputLabel, Select, MenuItem, Icon, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -25,16 +25,25 @@ const styles = theme => ({
       const { classes } = this.props;
 
         return (
-            <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="status">Status</InputLabel>
-          <Select
-            value={this.state.status}
-            onChange={this.handleChange}
-            inputProps={{
-              name: 'status',
-              id: 'status',
-            }}
-          >
+          <Grid container justify="center" alignItems="center">
+            <Grid item xs={3}>
+              <Grid container justify="center" alignItems="center">
+                <Icon color="action">
+                  done_all
+                </Icon>
+              </Grid>
+            </Grid>
+            <Grid item xs={9}>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="status">Status</InputLabel>
+            <Select
+              value={this.state.status}
+              onChange={this.handleChange}
+              inputProps={{
+                name: 'status',
+                id: 'status',
+              }}
+            >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
@@ -43,6 +52,10 @@ const styles = theme => ({
             <MenuItem value="Done">Done</MenuItem>
           </Select>
         </FormControl>
+            
+            </Grid>
+          </Grid>
+
         )
     }
 }

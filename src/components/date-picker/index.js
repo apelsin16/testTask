@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, Grid, Icon } from '@material-ui/core';
 import ImportanceRadioGroup from '../importance-radio-group';
-import { MuiPickersUtilsProvider, 
-    // DatePicker 
-} from 'material-ui-pickers';
-// import DateFnsUtils from '@date-io/date-fns';
 
 
 export default class DatePickerElement extends Component {
@@ -22,8 +18,15 @@ export default class DatePickerElement extends Component {
         const { handleDateChange } = this.props;
         const dateWasSelect = (selectedDate !== '');
         return (
-            <div>
-               
+            <Grid container justify="center" alignItems="center" >
+               <Grid item xs={3}>
+                <Grid container justify="center" alignItems="center" >
+                    <Icon  color="action">
+                        date_range
+                    </Icon>
+                </Grid>      
+               </Grid>
+               <Grid item xs={9}>
                         <TextField
                             id="date"
                             label="Date"
@@ -33,11 +36,12 @@ export default class DatePickerElement extends Component {
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                        />
-               
+                            />
+               </Grid>
                 { console.log(selectedDate) }
                 { dateWasSelect && <ImportanceRadioGroup />}
-            </div>
+            </Grid>
+            
         )
     }
 }

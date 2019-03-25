@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core';
 import { Button, Typography, Table, TableBody, TableHead, TableRow, TableCell, Drawer, AppBar, Toolbar, Fab } from '@material-ui/core';
 import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from "@mdi/js";
@@ -9,19 +10,29 @@ import DatePickerElement from './components/date-picker/';
 import SelectStatus from './components/select';
 import IntegrationReactSelect from './components/autocomplite';
 
-const style = {
+const drawerWidth = 600;
+
+const styles = theme => ({
   button: {
-    marginRight: 20,  
+    margin: 10,  
   },
   header: {
     top: "0",
     bottom: "auto"
   },
   footer: {
-    top: "auto",
+    position: "fixed",
     bottom: "0"
   },
-}
+  drawer: {
+    [theme.breakpoints.up('xs')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+      overflow: "auto"
+    },
+  }
+})
+
 
 const tasks = [
   {
@@ -77,6 +88,7 @@ class App extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div className="App">
         <Typography component="h2" variant="h1" gutterBottom>
@@ -86,7 +98,7 @@ class App extends Component {
         <Button 
           variant = "contained"
           color = "primary" 
-          style={style.button}
+          className={classes.button}
           onClick={this.toggleDrawer}
         >
           Add Task
@@ -115,7 +127,7 @@ class App extends Component {
                 <TableCell>{task.importance}</TableCell>
                 <TableCell>{task.tag}</TableCell>
                 <TableCell>
-                  <Fab style={style.fab} color="primary" style={style.button}>
+                  <Fab color="primary" className={classes.button}>
                     <Icon 
                       path={mdiPencil}
                       size={1}
@@ -134,7 +146,7 @@ class App extends Component {
             ))}            
           </TableBody>
         </Table>
-        <Drawer open={this.state.openDrawer} onClose={this.toggleDrawer} >
+        <Drawer open={this.state.openDrawer} onClose={this.toggleDrawer}  className={classes.drawer}>
           <AppBar position="static">
             <Toolbar>
               <Typography variant="h6" color="inherit">
@@ -149,17 +161,18 @@ class App extends Component {
             <SelectStatus />
             <IntegrationReactSelect />
           </form>
-          {/* <AppBar position="fixed" color="primary" className={style.footer}>
-            <Toolbar>
-              <Typography variant="h6" color="inherit">
-                New Task
-              </Typography>
-            </Toolbar>
-          </AppBar> */}
+          <footer className={classes.footer}>
+            <Button color="primary" variant = "contained" className={classes.button}>
+              Save
+            </Button>
+            <Button color="secondary" variant = "contained" className={classes.button}>
+              Cancel
+            </Button>
+          </footer>
         </Drawer>
       </div>
     );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
