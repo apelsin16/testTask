@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
   formControl: {
     // margin: theme.spacing.unit,
-    minWidth: 200
+    minWidth: 160
   }
 })
 

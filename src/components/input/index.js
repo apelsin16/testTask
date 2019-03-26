@@ -23,16 +23,24 @@ const styles = {
         name: ''
     }
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
+    handleInputChange = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+    
+        this.setState({ [name]: value });
+        // this.props.getName(this.state.name)
       };
+
+    
+
+
 
     render() {
         const { classes } = this.props;
         return (
            
             <Grid container 
-                spacing={8} 
+                 
                 justify="center"
                 alignItems="center"
             >
@@ -51,8 +59,9 @@ const styles = {
                     id="standard-name"
                     label="Name"
                     value={this.state.name}
-                    onChange={this.handleChange('name')}
+                    onChange={this.handleInputChange}
                     className={classes.input}
+                    name="name"
                 />
                 </Grid>
             </Grid > 

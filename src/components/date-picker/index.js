@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { TextField, Grid, Icon } from '@material-ui/core';
+import {  Grid, Icon } from '@material-ui/core';
 import ImportanceRadioGroup from '../importance-radio-group';
+import { DatePicker } from 'material-ui-pickers';
 
 
 export default class DatePickerElement extends Component {
 
     state = {
-        selectedDate: ""
+        selectedDate: ''
     }
 
-    handleDateChange = event => {
-        this.setState({ selectedDate: event.target.value });
+    handleDateChange = date => {
+        this.setState({ selectedDate: date });
       };
 
     render () {
         const { selectedDate } = this.state;
-        const { handleDateChange } = this.props;
+       
         const dateWasSelect = (selectedDate !== '');
         return (
             <Grid container justify="center" alignItems="center" >
@@ -27,18 +28,14 @@ export default class DatePickerElement extends Component {
                 </Grid>      
                </Grid>
                <Grid item xs={9}>
-                        <TextField
-                            id="date"
-                            label="Date"
-                            type="date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            />
-               </Grid>
-                { console.log(selectedDate) }
+                <DatePicker
+                    label="Select Date"
+                    value={selectedDate}
+                    onChange={this.handleDateChange}
+                    animateYearScrolling
+                    labelFunc={()=>"Select Date"}
+                />
+               </Grid>             
                 { dateWasSelect && <ImportanceRadioGroup />}
             </Grid>
             

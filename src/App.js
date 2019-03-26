@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
-import { Button, Typography, Table, TableBody, TableHead, TableRow, TableCell, Drawer, AppBar, Toolbar, Fab } from '@material-ui/core';
-import Icon from '@mdi/react';
-import { mdiPencil, mdiDelete } from "@mdi/js";
-import Input from './components/input/index';
+import { Button, Typography, Drawer, AppBar, Toolbar } from '@material-ui/core';
 import './App.css';
-import InputMulti from './components/input-multi';
-import DatePickerElement from './components/date-picker/';
-import SelectStatus from './components/select';
-import IntegrationReactSelect from './components/autocomplite';
+import Loader from './components/loader';
+import Warning from './components/warning';
+import { v4 } from 'uuid';
+import TaskEditor from './components/taskEditor';
+import TaskList from './components/taskList';
+
+
+
 
 const drawerWidth = 600;
 
 const styles = theme => ({
-  button: {
-    margin: 10,  
-  },
+  
   header: {
+    // position: "static",
     top: "0",
-    bottom: "auto"
+  },
+  content: {
+    marginTop: 200
   },
   footer: {
-    position: "fixed",
+    // position: "fixed",
     bottom: "0"
   },
   drawer: {
     [theme.breakpoints.up('xs')]: {
       width: drawerWidth,
       flexShrink: 0,
-      overflow: "auto"
+      overflow: "auto",
+      // position: "relative"
     },
   }
 })
@@ -77,7 +80,18 @@ const tasks = [
 class App extends Component {
 
   state = {
-    openDrawer: false, 
+    tasks: [ ...tasks ],
+    task: {
+      name: '',
+      description: '',
+      status: '',
+      date: '',
+      importance: '',
+      tag: '',
+    },
+    openDrawer: false,
+    warningOpen: false,
+    isLoading: false,
   }
 
   toggleDrawer = () => {
@@ -85,6 +99,22 @@ class App extends Component {
       openDrawer: !prevState.openDrawer 
     })
     )
+  }
+
+  addTask = ( task ) => {
+    console.log(task);
+    this.setState(prevState => ({
+      tasks: [
+        { id: v4(), ...task },
+        ...prevState.tasks
+      ]
+    })) 
+  } 
+
+  deleteTask = id => {
+    this.setState(prevState => ({
+      tasks: prevState.tasks.filter(task => task.id !== id)
+    }))
   }
 
   render() {
@@ -103,50 +133,16 @@ class App extends Component {
         >
           Add Task
         </Button>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Importance</TableCell>
-              <TableCell>Tag</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tasks.map( task => (
-              <TableRow key={task.id}>
-                <TableCell>{task.id}</TableCell>
-                <TableCell>{task.status}</TableCell>
-                <TableCell>{task.name}</TableCell>
-                <TableCell>{task.description}</TableCell>
-                <TableCell>{task.date}</TableCell>
-                <TableCell>{task.importance}</TableCell>
-                <TableCell>{task.tag}</TableCell>
-                <TableCell>
-                  <Fab color="primary" className={classes.button}>
-                    <Icon 
-                      path={mdiPencil}
-                      size={1}
-                      color="white"
-                    />                    
-                  </Fab>
-                  <Fab color="secondary">
-                    <Icon 
-                      path={mdiDelete}
-                      size={1}
-                      color="white"
-                    />
-                  </Fab>
-                </TableCell>
-              </TableRow>
-            ))}            
-          </TableBody>
-        </Table>
-        <Drawer open={this.state.openDrawer} onClose={this.toggleDrawer}  className={classes.drawer}>
+        
+        <Loader isOpen />
+        <TaskList 
+          tasks={this.state.tasks}
+          deleteTask={this.deleteTask}
+        />
+        <Warning />
+        <Drawer 
+        open={this.state.openDrawer} 
+        onClose={this.toggleDrawer}  className={classes.drawer}>
           <AppBar position="static">
             <Toolbar>
               <Typography variant="h6" color="inherit">
@@ -154,21 +150,8 @@ class App extends Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          <form>
-            <Input />
-            <InputMulti/>
-            <DatePickerElement />
-            <SelectStatus />
-            <IntegrationReactSelect />
-          </form>
-          <footer className={classes.footer}>
-            <Button color="primary" variant = "contained" className={classes.button}>
-              Save
-            </Button>
-            <Button color="secondary" variant = "contained" className={classes.button}>
-              Cancel
-            </Button>
-          </footer>
+          <TaskEditor addTask={this.addTask} className={classes.content}/>
+          
         </Drawer>
       </div>
     );

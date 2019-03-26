@@ -11,6 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
+import { Icon, Grid } from '@material-ui/core';
 
 const suggestions = [
   { label: 'tag0' },
@@ -26,6 +27,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     height: 250,
+    width: 215
   },
   input: {
     display: 'flex',
@@ -179,16 +181,21 @@ const components = {
 
 class IntegrationReactSelect extends React.Component {
   state = {
-    single: null,
-    multi: null,
+    single: null,    
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.single !== prevState.single) {
+      this.props.getTag(this.state.single.value);
+    }
+  }
 
   handleChange = name => value => {
     this.setState({
       [name]: value,
     });
   };
-
+ 
   render() {
     const { classes, theme } = this.props;
 
@@ -204,35 +211,29 @@ class IntegrationReactSelect extends React.Component {
 
     return (
       <div className={classes.root}>
-        <NoSsr>
-          <Select
-            classes={classes}
-            styles={selectStyles}
-            options={suggestions}
-            components={components}
-            value={this.state.single}
-            onChange={this.handleChange('single')}
-            placeholder="Select tag"
-            isClearable
-          />
-          {/* <div className={classes.divider} />
-          <Select
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: 'Label',
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={suggestions}
-            components={components}
-            value={this.state.multi}
-            onChange={this.handleChange('multi')}
-            placeholder="Select multiple countries"
-            isMulti
-          /> */}
-        </NoSsr>
+        <Grid container justify="center" alignItems="center">
+          <Grid item xs={3}>
+            <Grid container justify="center" alignItems="center">
+              <Icon color="action">
+                all_inbox
+              </Icon>
+            </Grid>
+          </Grid>
+          <Grid item xs={9}>
+            <NoSsr>
+              <Select
+                classes={classes}
+                styles={selectStyles}
+                options={suggestions}
+                components={components}
+                value={this.state.single}
+                onChange={this.handleChange("single")}
+                placeholder="Select tag"
+                name="single"
+              />         
+            </NoSsr>
+          </Grid>
+        </Grid>
       </div>
     );
   }
