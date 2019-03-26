@@ -13,8 +13,9 @@ class Task extends Component {
 
 
 
-    handleUpdate = ({status, name, description, date, importance, tag}) => {
-        this.props.onUpdateTask(this.props.id, {status, name, description, date, importance, tag});
+    handleUpdate = () => {
+        
+        this.props.onUpdateTask(this.props);
     };
     
 

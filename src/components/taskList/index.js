@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody, Fab } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import Task from '../task';
 
 
@@ -29,7 +29,7 @@ class TaskList extends Component {
         </TableHead>
         <TableBody>
           {this.props.tasks.map( task => (
-            <Task {...task} {...this.props} />
+            <Task key={task.id} {...task} {...this.props} />
           ))}            
         </TableBody>
       </Table> 

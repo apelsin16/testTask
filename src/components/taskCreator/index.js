@@ -4,7 +4,7 @@
 
 import IntegrationReactSelect from '../autocomplite';
 import moment from 'moment';
-
+// // moment().format('DD/MM/YYYY');
 
 const styles = theme => ({    
     icon: {
@@ -22,7 +22,7 @@ const styles = theme => ({
 
 
 
- class TaskEditor extends Component {
+ class TaskCreator extends Component {
     state = {
        name: '',
        description: '',
@@ -66,12 +66,12 @@ const styles = theme => ({
          return (
            <form>
              <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" color="inherit">
-                Edit Task
-              </Typography>
-            </Toolbar>
-          </AppBar>
+                <Toolbar>
+                  <Typography variant="h6" color="inherit">
+                   AddTask
+                  </Typography>
+                </Toolbar>
+              </AppBar>
                <Grid container 
                  
                  justify="center"
@@ -228,7 +228,7 @@ const styles = theme => ({
      }
  } 
         
- export default withStyles(styles)(TaskEditor);      
+ export default withStyles(styles)(TaskCreator);      
         
         
         

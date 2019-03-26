@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
-import { Button, Typography, Drawer, AppBar, Toolbar } from '@material-ui/core';
+import { Button, Typography, Drawer } from '@material-ui/core';
 import './App.css';
 import Loader from './components/loader';
 import Warning from './components/warning';
 import { v4 } from 'uuid';
-import TaskEditor from './components/taskEditor';
+import TaskCreator from './components/taskCreator';
 import TaskList from './components/taskList';
-
+import TaskEditor from './components/taskEditor';
 
 
 
@@ -82,6 +82,7 @@ class App extends Component {
   state = {
     tasks: [ ...tasks ],
     task: {
+      id: '',
       name: '',
       description: '',
       status: '',
@@ -92,6 +93,7 @@ class App extends Component {
     openDrawer: false,
     warningOpen: false,
     isLoading: false,
+    isEditing: false
   }
 
   toggleDrawer = () => {
@@ -117,6 +119,14 @@ class App extends Component {
     }))
   }
 
+  updateTask = ({task}) => {    
+    this.toggleDrawer();
+    this.setState(prevState => ({
+      isEditing: true,
+      task: { ...prevState.task }}));
+    console.log(this.state.task);
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -138,20 +148,18 @@ class App extends Component {
         <TaskList 
           tasks={this.state.tasks}
           deleteTask={this.deleteTask}
+          onUpdateTask={this.updateTask}
         />
         <Warning />
         <Drawer 
         open={this.state.openDrawer} 
         onClose={this.toggleDrawer}  className={classes.drawer}>
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" color="inherit">
-                New Task
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <TaskEditor addTask={this.addTask} className={classes.content}/>
-          
+          {!this.state.isEditing && <TaskCreator 
+            addTask={this.addTask} 
+            className={classes.content} 
+            task={this.state.task}
+          />}
+          {this.state.isEditing && <TaskEditor task={this.state.task} />}
         </Drawer>
       </div>
     );
