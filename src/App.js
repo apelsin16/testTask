@@ -9,23 +9,16 @@ import TaskCreator from './components/taskCreator';
 import TaskList from './components/taskList';
 import TaskEditor from './components/taskEditor';
 
-
+const idSelector = (id, tasks) => {
+  console.log(id);
+  console.log(tasks);
+  tasks.map( task => tasks.includes(id));
+}
 
 const drawerWidth = 600;
 
 const styles = theme => ({
   
-  header: {
-    // position: "static",
-    top: "0",
-  },
-  content: {
-    marginTop: 200
-  },
-  footer: {
-    // position: "fixed",
-    bottom: "0"
-  },
   drawer: {
     [theme.breakpoints.up('xs')]: {
       width: drawerWidth,
@@ -96,21 +89,53 @@ class App extends Component {
     isEditing: false
   }
 
-  toggleDrawer = () => {
+  openDrawer = () => {
     this.setState(prevState => ({
-      openDrawer: !prevState.openDrawer 
+      openDrawer: true 
     })
     )
   }
 
+  closeDrawer = () => {
+    this.setState(prevState => ({
+      openDrawer: false 
+    })
+    )
+  }
+
+  warningOpen = () => {
+    this.setState({ warningOpen: true });
+  };
+
+
+  warningClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({ warningOpen: false });
+    this.closeDrawer();
+  };
+
+  showLoader = () => {
+    this.setState({ isLoading: true})
+      setTimeout(
+      () => {
+        this.setState({ isLoading: false})
+      }, 2000
+    )
+    
+  } 
+
+
   addTask = ( task ) => {
-    console.log(task);
     this.setState(prevState => ({
       tasks: [
         { id: v4(), ...task },
         ...prevState.tasks
       ]
-    })) 
+    })); 
+    this.showLoader();
+    this.closeDrawer();
   } 
 
   deleteTask = id => {
@@ -119,12 +144,8 @@ class App extends Component {
     }))
   }
 
-  updateTask = ({task}) => {    
-    this.toggleDrawer();
-    this.setState(prevState => ({
-      isEditing: true,
-      task: { ...prevState.task }}));
-    console.log(this.state.task);
+  updateTask = () => {   
+      
   };
 
   render() {
@@ -139,25 +160,31 @@ class App extends Component {
           variant = "contained"
           color = "primary" 
           className={classes.button}
-          onClick={this.toggleDrawer}
+          onClick={this.openDrawer}
         >
           Add Task
         </Button>
         
-        <Loader isOpen />
         <TaskList 
           tasks={this.state.tasks}
           deleteTask={this.deleteTask}
           onUpdateTask={this.updateTask}
         />
-        <Warning />
+        { this.state.isLoading && <Loader />}
+        <Warning 
+          onWarningClose={this.warningClose} open={this.state.warningOpen}/>
         <Drawer 
-        open={this.state.openDrawer} 
-        onClose={this.toggleDrawer}  className={classes.drawer}>
+          open={this.state.openDrawer} 
+          onClose={this.closeDrawer} 
+          className={classes.drawer}   
+        >
+          
           {!this.state.isEditing && <TaskCreator 
             addTask={this.addTask} 
             className={classes.content} 
             task={this.state.task}
+            warningOpen={this.warningOpen}
+            onShowLoader={this.showLoader}
           />}
           {this.state.isEditing && <TaskEditor task={this.state.task} />}
         </Drawer>

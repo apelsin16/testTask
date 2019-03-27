@@ -7,6 +7,9 @@ import moment from 'moment';
 // // moment().format('DD/MM/YYYY');
 
 const styles = theme => ({    
+    container: {
+        marginTop: 100
+    },
     icon: {
         margin: 0,
         textAlign: "center"
@@ -17,6 +20,13 @@ const styles = theme => ({
     formControl: {
        
     minWidth: 160
+    },
+    footer: {
+      position: "fixed",
+      bottom: 0,
+    },
+    button: {
+      margin: 10
     }
 })
 
@@ -65,7 +75,7 @@ const styles = theme => ({
    
          return (
            <form>
-             <AppBar position="static">
+             <AppBar position="fixed">
                 <Toolbar>
                   <Typography variant="h6" color="inherit">
                    AddTask
@@ -74,6 +84,7 @@ const styles = theme => ({
               </AppBar>
                <Grid container 
                  
+                 className={classes.container}                 
                  justify="center"
                  alignItems="center"
              >
@@ -216,10 +227,16 @@ const styles = theme => ({
               variant = "contained" 
               className={classes.button}
               onClick={this.handleSubmit}
+            
             >
                 Save
             </Button>
-            <Button color="secondary" variant = "contained" className={classes.button}>
+            <Button 
+              color="secondary" 
+              variant = "contained" 
+              className={classes.button}
+              onClick={this.props.warningOpen}
+            >
               Cancel
             </Button>
           </footer>

@@ -15,7 +15,7 @@ class Task extends Component {
 
     handleUpdate = () => {
         
-        this.props.onUpdateTask(this.props);
+        this.props.onUpdateTask(this.props.id);
     };
     
 

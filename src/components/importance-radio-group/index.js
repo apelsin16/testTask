@@ -7,6 +7,7 @@ import { FormControl, FormLabel, RadioGroup, FormControlLabel } from '@material-
 
 const styles = {
   root: {
+    maxWidth: 300,
     marginTop: 20,
     color: green[600],
     '&$checked': {
