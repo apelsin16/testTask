@@ -31,7 +31,12 @@ const Warning = ( { classes, open, onWarningClose  } ) => {
           }}
           message={<span id="message-id">Exit without save</span>}
           action={[
-            <Button key="undo" color="secondary" size="small" onClick={onWarningClose}>
+            <Button 
+              key="undo" 
+              color="secondary" 
+              size="small" 
+              onClick={onWarningClose}
+            >
               UNDO
             </Button>,
             <IconButton

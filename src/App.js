@@ -10,9 +10,7 @@ import TaskList from './components/taskList';
 import TaskEditor from './components/taskEditor';
 
 const idSelector = (id, tasks) => {
-  console.log(id);
-  console.log(tasks);
-  tasks.map( task => tasks.includes(id));
+  return tasks.filter( el => el.id === id );
 }
 
 const drawerWidth = 600;
@@ -23,8 +21,7 @@ const styles = theme => ({
     [theme.breakpoints.up('xs')]: {
       width: drawerWidth,
       flexShrink: 0,
-      overflow: "auto",
-      // position: "relative"
+      overflow: "auto",      
     },
   }
 })
@@ -83,6 +80,7 @@ class App extends Component {
       importance: '',
       tag: '',
     },
+    taskId: null,
     openDrawer: false,
     warningOpen: false,
     isLoading: false,
@@ -90,16 +88,16 @@ class App extends Component {
   }
 
   openDrawer = () => {
-    this.setState(prevState => ({
+    this.setState({
       openDrawer: true 
-    })
+    }
     )
   }
 
   closeDrawer = () => {
-    this.setState(prevState => ({
+    this.setState({
       openDrawer: false 
-    })
+    }
     )
   }
 
@@ -122,8 +120,7 @@ class App extends Component {
       () => {
         this.setState({ isLoading: false})
       }, 2000
-    )
-    
+    )    
   } 
 
 
@@ -144,12 +141,24 @@ class App extends Component {
     }))
   }
 
-  updateTask = () => {   
-      
+  updateTask = id => {   
+      this.setState({
+        isEditing: true,
+        taskId: id
+      });
+      this.openDrawer();
   };
 
+  saveUpdatedTask = (task, id) => {
+   this.setState(prevState => ({
+     tasks: [idSelector(id, this.state.tasks), ...task, ...prevState.task ]
+   }))
+  }
+
   render() {
+    
     const { classes } = this.props;
+    const filter = idSelector(this.state.taskId, this.state.tasks);
     return (
       <div className="App">
         <Typography component="h2" variant="h1" gutterBottom>
@@ -186,7 +195,14 @@ class App extends Component {
             warningOpen={this.warningOpen}
             onShowLoader={this.showLoader}
           />}
-          {this.state.isEditing && <TaskEditor task={this.state.task} />}
+          {this.state.isEditing 
+            && 
+            <TaskEditor 
+              task={filter} 
+              taskId={this.state.taskId}  
+              saveUpdatedTask={this.saveUpdatedTask}
+            />
+          }
         </Drawer>
       </div>
     );

@@ -15,6 +15,9 @@ const styles = {
     },
   },
   checked: {},
+  group: {
+    fontSize: 12
+  }
 };
 
 class ImportanceRadioGroup extends React.Component {

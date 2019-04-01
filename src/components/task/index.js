@@ -11,14 +11,9 @@ const styles = {
  
 class Task extends Component {
 
-
-
-    handleUpdate = () => {
-        
+    handleUpdate = () => {        
         this.props.onUpdateTask(this.props.id);
     };
-    
-
     
     deleteTask = () => this.props.deleteTask(this.props.id);
 

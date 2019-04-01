@@ -1,10 +1,8 @@
  import React, { Component } from 'react';
  import { AppBar, Toolbar, Typography, Button, InputLabel, Select, MenuItem, Radio, Grid, Icon, withStyles, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel } from '@material-ui/core';
  import { DatePicker } from 'material-ui-pickers';
-
 import IntegrationReactSelect from '../autocomplite';
 import moment from 'moment';
-
 
 const styles = theme => ({    
     icon: {
@@ -20,8 +18,6 @@ const styles = theme => ({
     }
 })
 
-
-
  class TaskEditor extends Component {
     state = {
        name: '',
@@ -32,6 +28,24 @@ const styles = theme => ({
        tag: '',
     }
 
+    componentDidMount() {
+      this.updateEditor();
+    }
+
+    updateEditor = () => {
+      const { taskId, task } = this.props;      
+      if (!taskId) return;
+     
+      this.setState({
+       name: task[0].name,
+       description: task[0].description,
+       status: task[0].status,
+       date: task[0].date,
+       importance: task[0].importance,    
+       tag: task[0].tag,
+      })
+      console.log(this.state);
+    }
 
     handleInputChange = e => {
         const name = e.target.name;
@@ -59,12 +73,20 @@ const styles = theme => ({
           this.props.addTask(this.state);
       }
 
+      onSaveUpdatedTask = () => {
+        this.props.saveUpdatedTask(this.state, this.state.id);
+      }
+
      render () {
-         const { classes } = this.props;
+         const { classes, 
+          // taskId, 
+          // tasks 
+        } = this.props;
          const dateWasSelect = (this.state.date !== '');
    
          return (
            <form>
+             { console.log(this.props) }
              <AppBar position="static">
             <Toolbar>
               <Typography variant="h6" color="inherit">
@@ -215,7 +237,7 @@ const styles = theme => ({
               color="primary" 
               variant = "contained" 
               className={classes.button}
-              onClick={this.handleSubmit}
+              onClick={this.onSaveUpdatedTask}
             >
                 Save
             </Button>
