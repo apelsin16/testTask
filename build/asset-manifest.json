@@ -1,13 +1,13 @@
 {
   "main.css": "/testTask/build/static/css/main.f55dc7a0.chunk.css",
-  "main.js": "/testTask/build/static/js/main.0ec2701f.chunk.js",
-  "main.js.map": "/testTask/build/static/js/main.0ec2701f.chunk.js.map",
+  "main.js": "/testTask/build/static/js/main.212204b1.chunk.js",
+  "main.js.map": "/testTask/build/static/js/main.212204b1.chunk.js.map",
   "runtime~main.js": "/testTask/build/static/js/runtime~main.01a10ccd.js",
   "runtime~main.js.map": "/testTask/build/static/js/runtime~main.01a10ccd.js.map",
-  "static/js/2.d1ff7788.chunk.js": "/testTask/build/static/js/2.d1ff7788.chunk.js",
-  "static/js/2.d1ff7788.chunk.js.map": "/testTask/build/static/js/2.d1ff7788.chunk.js.map",
+  "static/js/2.fad80d1e.chunk.js": "/testTask/build/static/js/2.fad80d1e.chunk.js",
+  "static/js/2.fad80d1e.chunk.js.map": "/testTask/build/static/js/2.fad80d1e.chunk.js.map",
   "index.html": "/testTask/build/index.html",
-  "precache-manifest.d03a5b8904785df595d4ee3a5b0a4cae.js": "/testTask/build/precache-manifest.d03a5b8904785df595d4ee3a5b0a4cae.js",
+  "precache-manifest.197912b19cb3db6e8790331a26db2c7e.js": "/testTask/build/precache-manifest.197912b19cb3db6e8790331a26db2c7e.js",
   "service-worker.js": "/testTask/build/service-worker.js",
   "static/css/main.f55dc7a0.chunk.css.map": "/testTask/build/static/css/main.f55dc7a0.chunk.css.map"
 }

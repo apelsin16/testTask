@@ -96,7 +96,8 @@ class App extends Component {
 
   closeDrawer = () => {
     this.setState({
-      openDrawer: false 
+      openDrawer: false,
+      isEditing: false 
     }
     )
   }
@@ -150,9 +151,20 @@ class App extends Component {
   };
 
   saveUpdatedTask = (task, id) => {
-   this.setState(prevState => ({
-     tasks: [idSelector(id, this.state.tasks), ...task, ...prevState.task ]
-   }))
+   this.setState(({ tasks }) => {
+     const idx = tasks.includes(el => el.id ===id);
+     const newArr = [
+       ...tasks.slice(0, idx),
+       task,
+       ...tasks.slice(idx+1)
+     ];
+
+     return {
+       tasks: newArr
+     }     
+    })
+    this.showLoader();
+    this.closeDrawer();
   }
 
   render() {

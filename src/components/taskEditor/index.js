@@ -20,6 +20,7 @@ const styles = theme => ({
 
  class TaskEditor extends Component {
     state = {
+       id: '',
        name: '',
        description: '',
        status: '',
@@ -37,6 +38,7 @@ const styles = theme => ({
       if (!taskId) return;
      
       this.setState({
+       id: taskId,
        name: task[0].name,
        description: task[0].description,
        status: task[0].status,
